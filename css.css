@@ -1,6 +1,6 @@
 h1{
     font-family: "baskerville-urw" serif;
-    color: #69140E;
+    color: #EB5160;
 }
 
 p{
@@ -11,4 +11,18 @@ p{
 h2{
     font-family: "baskerville-urw" serif;
     color: #69140E;
+}
+
+h3{
+    font-family: "baskerville-urw" serif;
+    color: #EB5160;
+}
+
+h4{
+    font-family: "baskerville-urw" serif;
+    color: #69140E;
+}
+
+ul{
+    color: #38405F;
 }
