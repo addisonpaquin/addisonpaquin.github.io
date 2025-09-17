@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Barbie Movie Marathon</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      padding: 20px;
+    }
+
+    .card {
+      max-width: 400px;
+      margin: 0 auto;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background-color: #fff;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px;
+      background-color: #f0f0f0;
+    }
+
+    .card-header h3 {
+      margin: 0;
+      font-size: 1.2em;
+    }
+
+    .expand-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.3s ease;
+    }
+
+    .expand-btn:hover,
+    .expand-btn:focus {
+      background-color: #0056b3;
+      outline: none;
+    }
+
+    .card-content {
+      padding: 0 16px 16px;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="card-header">
+      <h3>Barbie Movie Marathon</h3>
+      <button class="expand-btn" aria-label="Expand card">+</button>
+    </div>
+    <div class="card-content">
+      <p class="summary">Barbie Marathon Movie Night</p>
+      <div class="details hidden">
+        <p>Saturday at the 1719. 9pm. Bring snacks!</p>
+        <p>Contact: AP</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let info = false;
+    
+const expandBtn = document.querySelector('.expand-btn');
+const details = document.querySelector('.card-content');
+
+expandBtn.addEventListener('click', showInfo);
+
+function showInfo() {
+    if (info = false) {
+        details.style.display = 'block';
+        info = true;
+    }
+    else {
+details.style.display = 'none';
+info = false;
+    }
+}
+  </script>
+</body>
+</html>
