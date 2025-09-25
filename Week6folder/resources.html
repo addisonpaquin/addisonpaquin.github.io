@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Resources</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <div class="grid-resources">
+    <header class="header">Available Resources</header>
+    <nav class="nav">
+      <a href="index.html">Home</a>
+      <a href="resources.html">Resources</a>
+    </nav>
+    <main class="main">
+      <h1>Filter Resources</h1>
+      
+      <input id="search" type="text" placeholder="Search resources..." aria-label="Search resources"/>
+
+      <ul id="resource-list">
+        <li>Food Pantry</li>
+        <li>Legal Aid</li>
+        <li>Housing Assistance</li>
+        <li>Childcare Services</li>
+        <li>Health Clinics</li>
+      </ul>
+
+      <h2>Contact Us</h2>
+      <form id="contact-form" novalidate>
+        <label for="name">Name:</label>
+        <input id="name" name="name" required />
+        
+        <label for="email">Email:</label>
+        <input id="email" name="email" type="email" required />
+
+        <button type="submit">Submit</button>
+        <p id="form-feedback" role="alert"></p>
+      </form>
+    </main>
+    <aside class="aside">
+      <h2>Top Rated</h2>
+      <ul>
+        <li>Food Pantry ★★★★★</li>
+        <li>Legal Aid ★★★★☆</li>
+      </ul>
+    </aside>
+    <footer class="footer">Last updated September 2025</footer>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
