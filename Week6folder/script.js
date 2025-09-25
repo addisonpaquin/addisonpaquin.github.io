@@ -27,8 +27,8 @@ if (form) {
       return;
     }
 
-    feedback.textContent = `Thank you, ${name}! We'll get back to you soon.`;
-    feedback.style.color = 'green';
+    feedback.textContent = `Thanks, ${name}! We'll get back to you soon.`;
+    feedback.style.color = 'pink';
     form.reset();
   });
 }
