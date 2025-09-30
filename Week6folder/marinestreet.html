@@ -16,6 +16,10 @@
     <main class="main">
       <h1>Welcome! Find Nearby Friends!</h1>
       <p>Get updates on current events, parties, and other information near you.</p>
+    <div class="theme-buttons">
+      <button onclick="setTheme('light')">Light Theme</button>
+      <button onclick="setTheme('dark')">Dark Theme</button>
+    </div>
     </main>
     <aside class="aside">
       <h2>Quick Links</h2>
@@ -26,5 +30,18 @@
     </aside>
     <footer class="footer">© 2025 Marine Street Neighborhood Hub</footer>
   </div>
+
+  <script>
+    function setTheme(theme) {
+      localStorage.setItem('userTheme', theme);
+      document.body.className = theme;
+    }
+
+    window.addEventListener('load', function(){
+        const savedTheme = localStorage.getItem('userTheme') || 'light';
+        document.body.className = savedTheme;
+
+    });
+  </script>
 </body>
 </html>
