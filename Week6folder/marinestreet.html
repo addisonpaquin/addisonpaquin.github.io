@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Marine Street Neighborhood Hub</title>
   <link rel="stylesheet" href="style.css" />
+
 </head>
 <body>
   <div class="grid-home">
@@ -34,12 +35,16 @@
   <script>
     function setTheme(theme) {
       localStorage.setItem('userTheme', theme);
-      document.body.className = theme;
+      document.body.classList.remove('light', 'dark');
+      document.body.classList.add(theme);
     }
 
     window.addEventListener('load', function(){
         const savedTheme = localStorage.getItem('userTheme') || 'light';
-        document.body.className = savedTheme;
+
+        document.body.classList.remove('light', 'dark');
+        document.body.classList.add(savedTheme);
+
 
     });
   </script>

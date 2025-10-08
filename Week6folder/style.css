@@ -84,3 +84,23 @@ button {
   margin-top: 0.5rem;
   color: #FF1493;
 }
+
+body.light {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+body.light header,
+body.light footer {
+    background-color: #ADD8E6;
+}
+
+body.dark {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+body.dark header,
+body.dark footer {
+    background-color: #1E1E1E;
+}
