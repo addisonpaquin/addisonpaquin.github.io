@@ -5,48 +5,82 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Marine Street Neighborhood Hub</title>
   <link rel="stylesheet" href="style.css" />
-
 </head>
+
 <body>
   <div class="grid-home">
-    <header class="header">Marine Street Neighborhood Hub</header>
-    <nav class="nav">
-      <a href="index.html">Home</a>
+    <header class="header">
+      <h1>Marine Street Neighborhood Hub</h1>
+    </header>
+
+    <nav class="nav" aria-label="Main navigation">
+      <a href="marine-street.html">Home</a>
       <a href="resources.html">Resources</a>
+      <a href="nav.html">Events</a>
     </nav>
+
     <main class="main">
-      <h1>Welcome! Find Nearby Friends!</h1>
-      <p>Get updates on current events, parties, and other information near you.</p>
-    <div class="theme-buttons">
-      <button onclick="setTheme('light')">Light Theme</button>
-      <button onclick="setTheme('dark')">Dark Theme</button>
-    </div>
+      <h2>Welcome! Find Nearby Friends!</h2>
+      <p>Get updates on current events, parties, and neighborhood happenings near you.</p>
+
+      <div class="theme-buttons">
+        <button onclick="setTheme('light')">Light Theme</button>
+        <button onclick="setTheme('dark')">Dark Theme</button>
+      </div>
+
+      <button id="clearDataBtn">Clear My Data</button>
+
+      <section class="privacy-info" aria-labelledby="privacy-heading">
+        <h3 id="privacy-heading">Privacy Information</h3>
+        <p>
+          We collect your theme preference and form input (name and email) to make your experience
+          more personalized. This data is stored locally in your browser using localStorage and is
+          never shared externally. You can clear this data anytime using the “Clear My Data” button.
+          Data automatically expires after 30 days.
+        </p>
+      </section>
     </main>
+
     <aside class="aside">
       <h2>Quick Links</h2>
       <ul>
-        <li><a href="#">Events</a></li>
-        <li><a href="#">Contacts</a></li>
+        <li><a href="nav.html">Upcoming Events</a></li>
+        <li><a href="resources.html#contact-form">Contact Us</a></li>
       </ul>
     </aside>
+
     <footer class="footer">© 2025 Marine Street Neighborhood Hub</footer>
   </div>
 
   <script>
     function setTheme(theme) {
-      localStorage.setItem('userTheme', theme);
+      localStorage.setItem('userTheme', JSON.stringify({ theme, timestamp: Date.now() }));
       document.body.classList.remove('light', 'dark');
       document.body.classList.add(theme);
     }
 
-    window.addEventListener('load', function(){
-        const savedTheme = localStorage.getItem('userTheme') || 'light';
+    function clearData() {
+      localStorage.clear();
+      document.body.classList.remove('dark', 'light');
+      document.body.classList.add('light');
+      alert('All stored data has been cleared.');
+    }
 
-        document.body.classList.remove('light', 'dark');
-        document.body.classList.add(savedTheme);
-
-
+    window.addEventListener('load', () => {
+      const stored = JSON.parse(localStorage.getItem('userTheme'));
+      if (stored) {
+        const thirtyDays = 30 * 24 * 60 * 60 * 1000;
+        if (Date.now() - stored.timestamp < thirtyDays) {
+          document.body.classList.add(stored.theme);
+        } else {
+          localStorage.removeItem('userTheme');
+        }
+      } else {
+        document.body.classList.add('light');
+      }
     });
+
+    document.getElementById('clearDataBtn').addEventListener('click', clearData);
   </script>
 </body>
 </html>

@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Barbie Movie Marathon</title>
+  <title>Neighborhood Event: Barbie Movie Marathon</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f2f2f2;
+      background-color: #f9f9f9;
       padding: 20px;
     }
 
@@ -18,8 +18,8 @@
       border-radius: 8px;
       background-color: #fff;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
     }
-
 
     .card-header {
       display: flex;
@@ -38,7 +38,7 @@
       width: 32px;
       height: 32px;
       border-radius: 50%;
-      background-color: #007BFF;
+      background-color: #FF69B4;
       color: white;
       border: none;
       font-size: 20px;
@@ -51,12 +51,12 @@
 
     .expand-btn:hover,
     .expand-btn:focus {
-      background-color: #0056b3;
+      background-color: #ff3fa0;
       outline: none;
     }
 
     .card-content {
-      padding: 0 16px 16px;
+      padding: 16px;
     }
 
     .hidden {
@@ -68,35 +68,28 @@
   <div class="card">
     <div class="card-header">
       <h3>Barbie Movie Marathon</h3>
-      <button class="expand-btn" aria-label="Expand card">+</button>
+      <button class="expand-btn" aria-expanded="false" aria-controls="event-details">+</button>
     </div>
     <div class="card-content">
-      <p class="summary">Barbie Marathon Movie Night</p>
-      <div class="details hidden">
-        <p>Saturday at the 1719. 9pm. Bring snacks!</p>
-        <p>Contact: AP</p>
+      <p class="summary">Movie Night at 1719 Marine Street!</p>
+      <div id="event-details" class="details hidden">
+        <p><strong>When:</strong> Saturday, 9 PM</p>
+        <p><strong>Where:</strong> 1719 Marine Street</p>
+        <p><strong>Bring:</strong> Snacks and friends!</p>
+        <p><strong>Host:</strong> Addison P.</p>
       </div>
     </div>
   </div>
 
   <script>
-    let info = false;
-    
-const expandBtn = document.querySelector('.expand-btn');
-const details = document.querySelector('.card-content');
+    const expandBtn = document.querySelector('.expand-btn');
+    const details = document.querySelector('.details');
 
-expandBtn.addEventListener('click', showInfo);
-
-function showInfo() {
-    if (info = false) {
-        details.style.display = 'block';
-        info = true;
-    }
-    else {
-details.style.display = 'none';
-info = false;
-    }
-}
+    expandBtn.addEventListener('click', () => {
+      const isHidden = details.classList.toggle('hidden');
+      expandBtn.textContent = isHidden ? '+' : '–';
+      expandBtn.setAttribute('aria-expanded', !isHidden);
+    });
   </script>
 </body>
 </html>

@@ -3,39 +3,26 @@ body {
   margin: 0;
   font-family: Arial, sans-serif;
 }
+
 a {
   text-decoration: none;
   color: #FF69B4;
 }
+a:hover, a:focus {
+  text-decoration: underline;
+}
+
 header, footer {
   background: #87CEFA;
   padding: 1rem;
 }
+
 nav a {
   margin-right: 1rem;
 }
 
 
-.grid-home {
-  display: grid;
-  grid-template-areas:
-    "header header"
-    "nav nav"
-    "main aside"
-    "footer footer";
-  grid-template-columns: 2fr 1fr;
-  gap: 1rem;
-  padding: 1rem;
-}
-
-.grid-home .header { grid-area: header; }
-.grid-home .nav { grid-area: nav; }
-.grid-home .main { grid-area: main; }
-.grid-home .aside { grid-area: aside; }
-.grid-home .footer { grid-area: footer; }
-
-
-.grid-resources {
+.grid-home, .grid-resources {
   display: grid;
   grid-template-areas:
     "header header"
@@ -47,11 +34,12 @@ nav a {
   padding: 1rem;
 }
 
-.grid-resources .header { grid-area: header; }
-.grid-resources .nav { grid-area: nav; }
-.grid-resources .main { grid-area: main; }
-.grid-resources .aside { grid-area: aside; }
-.grid-resources .footer { grid-area: footer; }
+
+.header { grid-area: header; }
+.nav { grid-area: nav; }
+.main { grid-area: main; }
+.aside { grid-area: aside; }
+.footer { grid-area: footer; }
 
 
 @media (max-width: 768px) {
@@ -79,28 +67,44 @@ input {
 }
 button {
   padding: 0.5rem;
+  cursor: pointer;
+}
+button:hover {
+  opacity: 0.9;
 }
 #form-feedback {
   margin-top: 0.5rem;
   color: #FF1493;
 }
 
+
 body.light {
   background-color: #ffffff;
   color: #000000;
 }
-
-body.light header,
-body.light footer {
-    background-color: #ADD8E6;
-}
-
 body.dark {
   background-color: #121212;
-  color: #ffffff;
+  color: #e0e0e0;
 }
 
 body.dark header,
 body.dark footer {
-    background-color: #1E1E1E;
+  background-color: #1E1E1E;
+}
+
+
+button#clearDataBtn {
+  margin-top: 1rem;
+  background-color: #FF69B4;
+  color: white;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+}
+
+
+@media (min-width: 1024px) {
+  .grid-home, .grid-resources {
+    grid-template-columns: 3fr 1fr;
+  }
 }

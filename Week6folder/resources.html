@@ -3,19 +3,24 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Resources</title>
+  <title>Community Resources</title>
   <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
   <div class="grid-resources">
-    <header class="header">Available Resources</header>
-    <nav class="nav">
-      <a href="marinestreet.html">Home</a>
+    <header class="header">
+      <h1>Available Resources</h1>
+    </header>
+
+    <nav class="nav" aria-label="Main navigation">
+      <a href="marine-street.html">Home</a>
       <a href="resources.html">Resources</a>
+      <a href="nav.html">Events</a>
     </nav>
+
     <main class="main">
-      <h1>Filter Resources</h1>
-      
+      <h2>Filter Resources</h2>
+
       <input id="search" type="text" placeholder="Search resources..." aria-label="Search resources"/>
 
       <ul id="resource-list">
@@ -29,24 +34,28 @@
       <h2>Contact Us</h2>
       <form id="contact-form" novalidate>
         <label for="name">Name:</label>
-        <input id="name" name="name" required />
-        
+        <input id="name" name="name" required placeholder="Your name" />
+
         <label for="email">Email:</label>
-        <input id="email" name="email" type="email" required />
+        <input id="email" name="email" type="email" required placeholder="your@email.com"/>
 
         <button type="submit">Submit</button>
         <p id="form-feedback" role="alert"></p>
       </form>
     </main>
+
     <aside class="aside">
       <h2>About You</h2>
       <ul>
-        <li>Post Your Profile</li>
-        <li>Post an Event</li>
+        <li><a href="#">Post Your Profile</a></li>
+        <li><a href="#">Host an Event</a></li>
       </ul>
     </aside>
-    <footer class="footer">Last updated September 2025</footer>
+
+    <footer class="footer">Last updated October 2025</footer>
   </div>
+
   <script src="script.js"></script>
 </body>
 </html>
+
