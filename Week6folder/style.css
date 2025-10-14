@@ -43,17 +43,23 @@ footer {
 .cta-btn {
   background-color: #ff69b4;
   color: white;
-  border: none;
-  padding: 10px 16px;
-  border-radius: 8px;
+  border: 3px solid #ff3fa0;     
+  padding: 12px 20px;
+  border-radius: 6px;            
   text-decoration: none;
   cursor: pointer;
   font-weight: bold;
-  transition: background-color 0.3s ease;
+  display: inline-block;
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    transform 0.2s ease;
 }
 
 .cta-btn:hover {
   background-color: #ff3fa0;
+  border-color: #ff69b4;         
+  transform: scale(1.05);        
 }
 
 
@@ -127,3 +133,86 @@ input, textarea {
     grid-template-columns: 1fr;
   }
 }
+
+
+.card {
+  max-width: 400px;
+  margin: 20px auto;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  background-color: #f0f0f0;
+}
+
+.card-header h3 {
+  margin: 0;
+  font-size: 1.2em;
+}
+
+.expand-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #FF69B4;
+  color: white;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+}
+
+.expand-btn:hover,
+.expand-btn:focus {
+  background-color: #ff3fa0;
+  outline: none;
+}
+
+.card-content {
+  padding: 16px;
+}
+
+.hidden {
+  display: none;
+}
+
+
+input:focus,
+textarea:focus {
+  outline: none;
+  border-color: #ff69b4;
+  box-shadow: 0 0 8px rgba(255, 105, 180, 0.6);
+  transform: scale(1.02);
+  transition:
+    border-color 0.3s ease-in-out,
+    box-shadow 0.3s ease-in-out,
+    transform 0.3s ease-in-out;
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+  input:focus,
+  textarea:focus {
+    transition: none;
+    transform: none;
+  }
+}
+
+
+input:not(:focus),
+textarea:not(:focus) {
+  background-color: #fafafa;
+  transition: background-color 0.3s ease-in-out;
+}
+
