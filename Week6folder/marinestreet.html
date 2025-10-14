@@ -38,7 +38,18 @@
           never shared externally. You can clear this data anytime using the “Clear My Data” button.
           Data automatically expires after 30 days.
         </p>
+    </section>
+
+            <section class="newsletter">
+        <h3>Join Our Neighborhood Newsletter</h3>
+        <form id="newsletter-form" novalidate>
+          <label for="newsletter-email">Email:</label>
+          <input id="newsletter-email" type="email" placeholder="Enter your email" required />
+          <button type="submit" class="cta-btn">Subscribe</button>
+          <div class="success-animation" aria-live="polite"></div>
+        </form>
       </section>
+
     </main>
 
     <aside class="aside">
@@ -81,6 +92,37 @@
     });
 
     document.getElementById('clearDataBtn').addEventListener('click', clearData);
+
+       
+    const newsletterForm = document.getElementById('newsletter-form');
+    const successAnimation = document.querySelector('.success-animation');
+
+    if (newsletterForm) {
+      newsletterForm.addEventListener('submit', e => {
+        e.preventDefault();
+        const emailInput = document.getElementById('newsletter-email');
+
+        if (!emailInput.value.trim()) {
+          successAnimation.textContent = 'Please enter a valid email.';
+          successAnimation.style.color = 'red';
+          successAnimation.style.opacity = '1';
+          return;
+        }
+
+        successAnimation.textContent = '🎉 You’re subscribed! Welcome, neighbor!';
+        successAnimation.style.color = '#32CD32';
+        successAnimation.style.animation = 'pop 0.6s ease';
+        successAnimation.style.opacity = '1';
+
+        setTimeout(() => {
+          successAnimation.style.opacity = '0';
+          successAnimation.style.animation = 'none';
+        }, 3000);
+
+        newsletterForm.reset();
+      });
+    }
+
   </script>
 </body>
 </html>
