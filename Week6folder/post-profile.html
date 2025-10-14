@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Post Your Profile</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="script.js" defer></script>
+</head>
+
+<body>
+  <header class="header">
+    <h1>Post Your Profile</h1>
+  </header>
+
+  <main class="form-container">
+    <form id="profile-form">
+      <label for="name">Name:</label>
+      <input id="name" type="text" placeholder="Your name" required />
+
+      <label for="bio">Short Bio:</label>
+      <textarea id="bio" placeholder="Tell your neighbors a little about you!" required></textarea>
+
+      <button type="submit" class="cta-btn">Submit</button>
+    </form>
+    <div class="success-animation" aria-live="polite"></div>
+
+    <a href="marinestreet.html" class="back-link">← Back to Home</a>
+  </main>
+</body>
+</html>

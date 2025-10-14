@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Persuasive Button Micro-interaction</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: #fafafa;
+  }
+
+
+  .cta-btn {
+    background-color: #ff69b4;           
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    transition:
+      transform 0.25s ease-in-out,
+      box-shadow 0.25s ease-in-out,
+      background-color 0.25s ease-in-out;
+  }
+
+
+  .cta-btn:hover {
+    transform: scale(1.08);
+    background-color: #ff3fa0;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+  }
+
+
+  .cta-btn:active {
+    transform: scale(0.96);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  }
+
+
+  @media (prefers-reduced-motion: reduce) {
+    .cta-btn {
+      transition: none;
+    }
+  }
+</style>
+</head>
+<body>
+  <button class="cta-btn">Sign Me Up!</button>
+</body>
+</html>

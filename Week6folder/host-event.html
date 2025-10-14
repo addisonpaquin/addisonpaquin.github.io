@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Host an Event</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="script.js" defer></script>
+</head>
+
+<body>
+  <header class="header">
+    <h1>Host an Event</h1>
+  </header>
+
+  <main class="form-container">
+    <form id="event-form">
+      <label for="event-title">Event Title:</label>
+      <input id="event-title" type="text" placeholder="e.g. BBQ Night or Yoga Meetup" required />
+
+      <label for="event-date">Date & Time:</label>
+      <input id="event-date" type="datetime-local" required />
+
+      <label for="event-location">Location:</label>
+      <input id="event-location" type="text" placeholder="Address or park name" required />
+
+      <label for="event-description">Description:</label>
+      <textarea id="event-description" placeholder="What's the event about?" required></textarea>
+
+      <button type="submit" class="cta-btn">Post Event</button>
+    </form>
+    <div class="success-animation" aria-live="polite"></div>
+
+    <a href="marinestreet.html" class="back-link">← Back to Home</a>
+  </main>
+</body>
+</html>
