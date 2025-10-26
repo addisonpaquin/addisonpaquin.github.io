@@ -5,17 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Marine Street Neighborhood Hub</title>
   <link rel="stylesheet" href="style.css" />
-  <script defer src="script.js"></script>
+  <script src="script.js" defer></script>
 </head>
 
-<body>
+<body class="mode-light">
   <div class="grid-home">
     <header class="header">
       <h1>Marine Street Neighborhood Hub</h1>
     </header>
 
     <nav class="nav" aria-label="Main navigation">
-      <a href="marinestreet.html">Home</a>
+      <a href="marinestreet.html" class="active">Home</a>
       <a href="resources.html">Resources</a>
       <a href="nav.html">Events</a>
     </nav>
@@ -24,30 +24,32 @@
       <h2>Welcome! Find Nearby Friends!</h2>
       <p>Get updates on current events, parties, and neighborhood happenings near you.</p>
 
-      <div class="theme-buttons">
-        <button onclick="setTheme('light')">Light Theme</button>
-        <button onclick="setTheme('dark')">Dark Theme</button>
+      <div class="mode-buttons">
+        <button type="button" class="chip" onclick="setMode('light')">Light Mode</button>
+        <button type="button" class="chip" onclick="setMode('dark')">Dark Mode</button>
       </div>
 
-      <button id="clearDataBtn">Clear My Data</button>
+      <button id="clearDataBtn" class="chip danger">Clear My Data</button>
 
       <section class="privacy-info" aria-labelledby="privacy-heading">
         <h3 id="privacy-heading">Privacy Information</h3>
         <p>
-          We collect your theme preference and form input (name and email) to make your experience
+          We collect your mode preference and form input (name and email) to make your experience
           more personalized. This data is stored locally in your browser using localStorage and is
           never shared externally. You can clear this data anytime using the “Clear My Data” button.
           Data automatically expires after 30 days.
         </p>
-    </section>
+      </section>
 
-    <section class="actions">
-      <h3>Get Involved</h3>
-      <a href="post-profile.html" class="btn">Post Your Profile</a>
-      <a href="host-event.html" class="btn">Host an Event</a>
-    </section>
-    
-            <section class="newsletter">
+      <section class="actions">
+        <h3>Get Involved</h3>
+        <div class="action-buttons">
+          <a href="post-profile.html" class="cta-btn">Post Your Profile</a>
+          <a href="host-event.html" class="cta-btn">Host an Event</a>
+        </div>
+      </section>
+
+      <section class="newsletter">
         <h3>Join Our Neighborhood Newsletter</h3>
         <form id="newsletter-form" novalidate>
           <label for="newsletter-email">Email:</label>
@@ -56,80 +58,17 @@
           <div class="success-animation" aria-live="polite"></div>
         </form>
       </section>
-
     </main>
 
     <aside class="aside">
       <h2>Quick Links</h2>
-      <ul>
-        <li><a href="nav.html">Upcoming Events</a></li>
-        <li><a href="resources.html#contact-form">Contact Us</a></li>
+      <ul class="aside-links">
+        <li><a href="nav.html" class="link">Upcoming Events</a></li>
+        <li><a href="resources.html#contact-form" class="link">Contact Us</a></li>
       </ul>
     </aside>
 
     <footer class="footer">© 2025 Marine Street Neighborhood Hub</footer>
   </div>
-
-  <script>
-    function setTheme(theme) {
-      localStorage.setItem('userTheme', JSON.stringify({ theme, timestamp: Date.now() }));
-      document.body.classList.remove('light', 'dark');
-      document.body.classList.add(theme);
-    }
-
-    function clearData() {
-      localStorage.clear();
-      document.body.classList.remove('dark', 'light');
-      document.body.classList.add('light');
-      alert('All stored data has been cleared.');
-    }
-
-    window.addEventListener('load', () => {
-      const stored = JSON.parse(localStorage.getItem('userTheme'));
-      if (stored) {
-        const thirtyDays = 30 * 24 * 60 * 60 * 1000;
-        if (Date.now() - stored.timestamp < thirtyDays) {
-          document.body.classList.add(stored.theme);
-        } else {
-          localStorage.removeItem('userTheme');
-        }
-      } else {
-        document.body.classList.add('light');
-      }
-    });
-
-    document.getElementById('clearDataBtn').addEventListener('click', clearData);
-
-       
-    const newsletterForm = document.getElementById('newsletter-form');
-    const successAnimation = document.querySelector('.success-animation');
-
-    if (newsletterForm) {
-      newsletterForm.addEventListener('submit', e => {
-        e.preventDefault();
-        const emailInput = document.getElementById('newsletter-email');
-
-        if (!emailInput.value.trim()) {
-          successAnimation.textContent = 'Please enter a valid email.';
-          successAnimation.style.color = 'red';
-          successAnimation.style.opacity = '1';
-          return;
-        }
-
-        successAnimation.textContent = '🎉 You’re subscribed! Welcome, neighbor!';
-        successAnimation.style.color = '#32CD32';
-        successAnimation.style.animation = 'pop 0.6s ease';
-        successAnimation.style.opacity = '1';
-
-        setTimeout(() => {
-          successAnimation.style.opacity = '0';
-          successAnimation.style.animation = 'none';
-        }, 3000);
-
-        newsletterForm.reset();
-      });
-    }
-
-  </script>
 </body>
 </html>

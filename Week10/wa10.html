@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>WA10 — Random Inspirational Quotes</title>
+    <link rel="stylesheet" href="wa10.css" />
+  </head>
+  <body>
+    <main class="quote-app">
+      <h1 class="quote-title">Inspiration Generator 💭</h1>
+      <div id="quote-container">
+        <p id="js-quote-text" class="quote-text" aria-live="polite">
+          Loading inspiration...
+        </p>
+        <p id="js-author" class="quote-author"></p>
+      </div>
+      <button id="js-new-quote" class="quote-button" type="button">
+        New Quote
+      </button>
+      <button id="js-tweet" class="tweet-button" type="button">
+        Tweet This 🕊️
+      </button>
+
+      <div class="loading" id="loading"></div>
+
+      <section class="info">
+        <p>
+          <strong>Extension:</strong> I extended the quote machine by adding a loading animation and a "Tweet This" button that lets users share their favorite quotes instantly on Twitter. The background and buttons were restyled to match a calm, uplifting aesthetic.
+        </p>
+        <p>
+          <strong>API in my critique project:</strong> For my upcoming critique project, I could use an API like Spotify’s or TikTok’s to pull real data on trending audio or user engagement. This would help demonstrate algorithmic bias by visualizing which artists or creators are most promoted and why.
+        </p>
+      </section>
+    </main>
+    <script src="wa10.js" defer></script>
+  </body>
+</html>

@@ -1,0 +1,55 @@
+:root {
+  --background: #f0f4ff;
+  --card-background: #ffffff;
+  --text-color: #222831;
+  --accent: #0077b6;
+  --accent-hover: #023e8a;
+}
+
+.quote-author {
+  font-style: italic;
+  color: #555;
+  margin-bottom: 1.5rem;
+}
+
+.tweet-button {
+  background: linear-gradient(135deg, #00acee, #0077b6);
+  color: white;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0.75rem 2.5rem;
+  margin-left: 1rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.tweet-button:hover {
+  background: linear-gradient(135deg, #0094cc, #023e8a);
+  transform: translateY(-2px);
+}
+
+.loading {
+  display: none;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid var(--accent);
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  margin: 1rem auto;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.info {
+  margin-top: 2rem;
+  font-size: 0.95rem;
+  color: #444;
+  line-height: 1.6;
+}

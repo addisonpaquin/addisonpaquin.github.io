@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="style.css"/>
   <script src="script.js" defer></script>
 </head>
-<body>
+<body class="mode-light">
   <div class="grid-resources">
     <header class="header">
       <h1>Available Resources</h1>
@@ -31,8 +31,8 @@
         <li>Submit a Complaint</li>
       </ul>
 
-      <h2>Contact Us</h2>
-      <form id="contact-form" novalidate>
+      <h2 id="contact-form">Contact Us</h2>
+      <form novalidate>
         <label for="name">Name:</label>
         <input id="name" name="name" required placeholder="Your name" />
 
@@ -46,9 +46,9 @@
 
     <aside class="aside">
       <h2>About You</h2>
-      <ul>
-        <li><a href="post-profile.html" class="cta-btn">Post Your Profile</a></li>
-        <li><a href="host-event.html" class="cta-btn">Host an Event</a></li>
+      <ul class="aside-links">
+        <li><a href="post-profile.html" class="cta-btn block">Post Your Profile</a></li>
+        <li><a href="host-event.html" class="cta-btn block">Host an Event</a></li>
       </ul>
     </aside>
 
