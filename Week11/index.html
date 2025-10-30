@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Book Search • Open Library</title>
+  <meta name="description" content="Search books via Open Library. Save favorites locally with export/delete controls and transparent data use." />
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      background: #0f172a;
+      color: #e5e7eb;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      text-align: center;
+      padding: 1.5rem;
+      background: #1e293b;
+    }
+    header h1 {
+      margin: 0;
+      color: #60a5fa;
+    }
+    main {
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 1rem;
+    }
+    .controls {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    input, select, button {
+      padding: 0.6rem;
+      border-radius: 6px;
+      border: 1px solid #475569;
+      background: #0f172a;
+      color: #e5e7eb;
+    }
+    button {
+      background: #3b82f6;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #2563eb;
+    }
+    .status {
+      color: #94a3b8;
+      margin-bottom: 1rem;
+    }
+    .grid {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    }
+    .card {
+      background: #1e293b;
+      border-radius: 10px;
+      padding: 1rem;
+    }
+    .card img {
+      width: 100%;
+      border-radius: 8px;
+    }
+    .card h3 {
+      font-size: 1rem;
+      margin: 0.5rem 0 0.2rem;
+    }
+    .card p {
+      font-size: 0.85rem;
+      color: #94a3b8;
+      margin: 0 0 0.6rem;
+    }
+    .favorites {
+      margin-top: 2rem;
+      background: #1e293b;
+      border-radius: 10px;
+      padding: 1rem;
+    }
+    .favorites h2 {
+      margin-top: 0;
+      color: #22d3ee;
+    }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      color: #94a3b8;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Open Library Book Search</h1>
+    <p>Search books, save favorites locally, and manage your data.</p>
+  </header>
+
+  <main>
+    <div class="controls">
+      <input id="query" type="search" placeholder="Search for books..." />
+      <select id="sort">
+        <option value="relevance">Relevance</option>
+        <option value="year_desc">Year ↓</option>
+        <option value="year_asc">Year ↑</option>
+      </select>
+      <button id="searchBtn">Search</button>
+    </div>
+    <div id="status" class="status"></div>
+    <div id="results" class="grid"></div>
+
+    <div class="favorites">
+      <h2>Favorites</h2>
+      <p>Saved locally on your browser. Export or clear anytime.</p>
+      <div id="favorites" class="grid"></div>
+      <div style="display:flex; gap:0.5rem; margin-top:1rem;">
+        <button id="exportBtn">Export JSON</button>
+        <button id="clearBtn" style="background:#ef4444;">Clear All</button>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    Built for the API & User Control Assignment • Uses Open Library API
+  </footer>
+
+  <script>
+    const $ = (s) => document.querySelector(s);
+    const resultsEl = $('#results');
+    const favoritesEl = $('#favorites');
+    const statusEl = $('#status');
+    const LS_KEY = 'favorites';
+
+    const getCover = (id) =>
+      id ? `https://covers.openlibrary.org/b/id/${id}-M.jpg` : '';
+
+    function setStatus(msg, type = 'info') {
+      statusEl.textContent = msg;
+      statusEl.style.color =
+        type === 'error' ? '#f87171' : type === 'ok' ? '#34d399' : '#94a3b8';
+    }
+
+    function loadFavorites() {
+      try {
+        return JSON.parse(localStorage.getItem(LS_KEY)) || [];
+      } catch {
+        return [];
+      }
+    }
+
+    function saveFavorites(favs) {
+      localStorage.setItem(LS_KEY, JSON.stringify(favs));
+      renderFavorites();
+    }
+
+    function addFavorite(book) {
+      const favs = loadFavorites();
+      if (!favs.find((b) => b.key === book.key)) {
+        favs.unshift(book);
+        saveFavorites(favs);
+        setStatus('Added to favorites!', 'ok');
+      } else {
+        setStatus('Already saved.', 'error');
+      }
+    }
+
+    function removeFavorite(key) {
+      const favs = loadFavorites().filter((b) => b.key !== key);
+      saveFavorites(favs);
+    }
+
+    function exportFavorites() {
+      const data = JSON.stringify(loadFavorites(), null, 2);
+      const blob = new Blob([data], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'favorites.json';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function clearFavorites() {
+      localStorage.removeItem(LS_KEY);
+      renderFavorites();
+    }
+
+    function renderFavorites() {
+      const favs = loadFavorites();
+      favoritesEl.innerHTML = '';
+      if (!favs.length) {
+        favoritesEl.innerHTML = '<p>No favorites saved.</p>';
+        return;
+      }
+      favs.forEach((b) => {
+        const div = document.createElement('div');
+        div.className = 'card';
+        div.innerHTML = `
+          <img src="${getCover(b.cover_i)}" alt="Cover" />
+          <h3>${b.title}</h3>
+          <p>${b.author_name?.[0] || 'Unknown'} • ${b.first_publish_year || ''}</p>
+          <button style="background:#ef4444;">Remove</button>
+        `;
+        div.querySelector('button').onclick = () => removeFavorite(b.key);
+        favoritesEl.appendChild(div);
+      });
+    }
+
+    async function searchBooks() {
+      const q = $('#query').value.trim();
+      if (!q) return setStatus('Please enter a search term.', 'error');
+      setStatus('Loading...');
+      resultsEl.innerHTML = '';
+      try {
+        const res = await fetch(`https://openlibrary.org/search.json?q=${encodeURIComponent(q)}&limit=30`);
+        if (!res.ok) throw new Error(res.statusText);
+        const data = await res.json();
+        const docs = data.docs || [];
+        if (!docs.length) return setStatus('No results found.', 'error');
+        const sorted = sortBooks(docs, $('#sort').value);
+        renderResults(sorted.slice(0, 30));
+        setStatus(`Showing ${sorted.length} results.`, 'ok');
+      } catch (e) {
+        console.error(e);
+        setStatus('Failed to fetch results.', 'error');
+      }
+    }
+
+    function sortBooks(docs, sort) {
+      const arr = [...docs];
+      if (sort === 'year_desc')
+        arr.sort((a, b) => (b.first_publish_year || 0) - (a.first_publish_year || 0));
+      if (sort === 'year_asc')
+        arr.sort((a, b) => (a.first_publish_year || 0) - (b.first_publish_year || 0));
+      return arr;
+    }
+
+    function renderResults(list) {
+      resultsEl.innerHTML = '';
+      list.forEach((b) => {
+        const div = document.createElement('div');
+        div.className = 'card';
+        div.innerHTML = `
+          <img src="${getCover(b.cover_i)}" alt="Cover" />
+          <h3>${b.title}</h3>
+          <p>${b.author_name?.[0] || 'Unknown'} • ${b.first_publish_year || ''}</p>
+          <button>Add to Favorites</button>
+        `;
+        div.querySelector('button').onclick = () => addFavorite(b);
+        resultsEl.appendChild(div);
+      });
+    }
+
+    $('#searchBtn').onclick = searchBooks;
+    $('#query').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') searchBooks();
+    });
+    $('#exportBtn').onclick = exportFavorites;
+    $('#clearBtn').onclick = () => {
+      if (confirm('Clear all favorites?')) clearFavorites();
+    };
+
+    renderFavorites();
+  </script>
+</body>
+</html>
