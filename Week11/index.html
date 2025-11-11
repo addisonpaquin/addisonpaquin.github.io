@@ -4,120 +4,184 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Book Search • Open Library</title>
-  <meta name="description" content="Search books via Open Library. Save favorites locally with export/delete controls and transparent data use." />
+
   <style>
     body {
       font-family: system-ui, sans-serif;
       background: #0f172a;
-      color: #e5e7eb;
+      color: #f1f5f9;
       margin: 0;
       padding: 0;
     }
+
+    /* High-contrast focus outline */
+    :focus {
+      outline: 3px solid #facc15;
+      outline-offset: 3px;
+    }
+
     header {
       text-align: center;
       padding: 1.5rem;
       background: #1e293b;
+      position: relative;
     }
+
+    /* BACK BUTTON */
+    .back-btn {
+      position: absolute;
+      left: 1rem;
+      top: 1.2rem;
+      background: none;
+      border: none;
+      color: #60a5fa;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+    .back-btn:hover {
+      text-decoration: underline;
+    }
+
     header h1 {
       margin: 0;
       color: #60a5fa;
     }
+
     main {
       max-width: 900px;
       margin: 2rem auto;
       padding: 1rem;
     }
+
     .controls {
       display: flex;
       gap: 0.5rem;
       margin-bottom: 1rem;
+      align-items: flex-end;
     }
-    input, select, button {
+
+    input, select {
       padding: 0.6rem;
       border-radius: 6px;
-      border: 1px solid #475569;
+      border: 2px solid #64748b;
       background: #0f172a;
-      color: #e5e7eb;
+      color: #f1f5f9;
     }
+
     button {
-      background: #3b82f6;
+      padding: 0.6rem;
+      border-radius: 6px;
+      background: #2563eb;
       border: none;
       cursor: pointer;
+      color: white;
+      font-weight: 600;
     }
+
     button:hover {
-      background: #2563eb;
+      background: #1d4ed8;
     }
+
     .status {
-      color: #94a3b8;
+      color: #cbd5e1;
       margin-bottom: 1rem;
     }
+
     .grid {
       display: grid;
       gap: 1rem;
       grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     }
+
     .card {
       background: #1e293b;
       border-radius: 10px;
       padding: 1rem;
     }
+
     .card img {
       width: 100%;
       border-radius: 8px;
     }
+
     .card h3 {
       font-size: 1rem;
       margin: 0.5rem 0 0.2rem;
+      color: #f1f5f9;
     }
+
     .card p {
       font-size: 0.85rem;
-      color: #94a3b8;
+      color: #cbd5e1;
       margin: 0 0 0.6rem;
     }
+
     .favorites {
       margin-top: 2rem;
       background: #1e293b;
       border-radius: 10px;
       padding: 1rem;
     }
+
     .favorites h2 {
       margin-top: 0;
       color: #22d3ee;
     }
+
     footer {
       text-align: center;
       padding: 1rem;
       color: #94a3b8;
-      font-size: 0.9rem;
+    }
+
+    /* Screen-reader only labels */
+    .visually-hidden {
+      position: absolute;
+      left: -9999px;
+      top: auto;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
     }
   </style>
 </head>
+
 <body>
   <header>
+    <!-- ✅ BACK ARROW -->
+    <button id="backBtn" aria-label="Go back" class="back-btn">←</button>
+
     <h1>Open Library Book Search</h1>
     <p>Search books, save favorites locally, and manage your data.</p>
   </header>
 
   <main>
+
     <div class="controls">
-      <input id="query" type="search" placeholder="Search for books..." />
-      <select id="sort">
+      <label for="query" class="visually-hidden">Search for books</label>
+      <input id="query" type="search" placeholder="Search for books..." aria-label="Search for books" />
+
+      <label for="sort" class="visually-hidden">Sort results</label>
+      <select id="sort" aria-label="Sort results">
         <option value="relevance">Relevance</option>
         <option value="year_desc">Year ↓</option>
         <option value="year_asc">Year ↑</option>
       </select>
+
       <button id="searchBtn">Search</button>
     </div>
+
     <div id="status" class="status"></div>
     <div id="results" class="grid"></div>
 
     <div class="favorites">
       <h2>Favorites</h2>
-      <p>Saved locally on your browser. Export or clear anytime.</p>
+      <p>Saved locally in your browser. Export or delete anytime.</p>
       <div id="favorites" class="grid"></div>
+
       <div style="display:flex; gap:0.5rem; margin-top:1rem;">
         <button id="exportBtn">Export JSON</button>
-        <button id="clearBtn" style="background:#ef4444;">Clear All</button>
+        <button id="clearBtn" style="background:#dc2626;">Clear All</button>
       </div>
     </div>
   </main>
@@ -139,7 +203,7 @@
     function setStatus(msg, type = 'info') {
       statusEl.textContent = msg;
       statusEl.style.color =
-        type === 'error' ? '#f87171' : type === 'ok' ? '#34d399' : '#94a3b8';
+        type === 'error' ? '#f87171' : type === 'ok' ? '#34d399' : '#cbd5e1';
     }
 
     function loadFavorites() {
@@ -197,11 +261,12 @@
       favs.forEach((b) => {
         const div = document.createElement('div');
         div.className = 'card';
+        div.tabIndex = 0;
         div.innerHTML = `
-          <img src="${getCover(b.cover_i)}" alt="Cover" />
+          <img src="${getCover(b.cover_i)}" alt="Book cover for ${b.title}" />
           <h3>${b.title}</h3>
           <p>${b.author_name?.[0] || 'Unknown'} • ${b.first_publish_year || ''}</p>
-          <button style="background:#ef4444;">Remove</button>
+          <button style="background:#dc2626;">Remove</button>
         `;
         div.querySelector('button').onclick = () => removeFavorite(b.key);
         favoritesEl.appendChild(div);
@@ -242,8 +307,9 @@
       list.forEach((b) => {
         const div = document.createElement('div');
         div.className = 'card';
+        div.tabIndex = 0;
         div.innerHTML = `
-          <img src="${getCover(b.cover_i)}" alt="Cover" />
+          <img src="${getCover(b.cover_i)}" alt="Book cover for ${b.title}" />
           <h3>${b.title}</h3>
           <p>${b.author_name?.[0] || 'Unknown'} • ${b.first_publish_year || ''}</p>
           <button>Add to Favorites</button>
@@ -258,9 +324,26 @@
       if (e.key === 'Enter') searchBooks();
     });
     $('#exportBtn').onclick = exportFavorites;
+
     $('#clearBtn').onclick = () => {
       if (confirm('Clear all favorites?')) clearFavorites();
     };
+
+    /* ✅ BACK BUTTON FUNCTIONALITY */
+    $('#backBtn').onclick = () => {
+      if (document.referrer) {
+        window.history.back();
+      } else {
+        window.location.href = 'index.html'; // fallback
+      }
+    };
+
+    /* ✅ ESCAPE LEAVES SITE */
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        window.location.href = 'index.html'; // change if needed
+      }
+    });
 
     renderFavorites();
   </script>
