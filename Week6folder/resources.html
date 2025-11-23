@@ -31,8 +31,8 @@
         <li>Submit a Complaint</li>
       </ul>
 
-      <h2 id="contact-form">Contact Us</h2>
-      <form novalidate>
+      <h2 id="contact-form-heading">Contact Us</h2>
+      <form id="contact-form" novalidate>
         <label for="name">Name:</label>
         <input id="name" name="name" required placeholder="Your name" />
 
@@ -53,6 +53,16 @@
     </aside>
 
     <footer class="footer">Last updated October 2025</footer>
+  </div>
+
+  <!-- BOTTOM BAR -->
+  <div class="bottom-bar" role="toolbar" aria-label="Display and data settings">
+    <button id="modeToggle" class="mode-toggle" aria-pressed="false">
+      🌞 Light mode
+    </button>
+    <button id="clearDataBtn" class="clear-btn" type="button">
+      🗑 Clear my data
+    </button>
   </div>
 </body>
 </html>
