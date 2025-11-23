@@ -1,21 +1,85 @@
-// === THEME SWITCHER ===
-function setTheme(theme) {
-  document.body.className = theme;
-  localStorage.setItem('theme', theme);
+// === THEME HANDLING ===
+
+function updateModeToggle(themeClass) {
+  const toggle = document.getElementById('modeToggle');
+  if (!toggle) return;
+
+  const isDark = themeClass === 'mode-dark';
+  toggle.textContent = isDark ? '🌙 Dark mode' : '🌞 Light mode';
+  toggle.setAttribute('aria-pressed', String(isDark));
+}
+
+function applySavedTheme() {
+  const savedTheme = localStorage.getItem('theme');
+  const themeClass = savedTheme === 'mode-dark' ? 'mode-dark' : 'mode-light';
+  document.body.classList.remove('mode-light', 'mode-dark');
+  document.body.classList.add(themeClass);
+  updateModeToggle(themeClass);
+}
+
+function toggleTheme() {
+  const isDark = document.body.classList.contains('mode-dark');
+  const newTheme = isDark ? 'mode-light' : 'mode-dark';
+  document.body.classList.remove('mode-light', 'mode-dark');
+  document.body.classList.add(newTheme);
+  localStorage.setItem('theme', newTheme);
+  updateModeToggle(newTheme);
+}
+
+// === RENDER NEIGHBORS ON HOME ===
+function renderNeighbors() {
+  const container = document.getElementById('neighbor-list');
+  if (!container) return;
+
+  const profiles = JSON.parse(localStorage.getItem('profiles') || '[]');
+  container.innerHTML = '';
+
+  profiles.forEach((profile) => {
+    const card = document.createElement('article');
+    card.className = 'neighbor-card';
+
+    const img = document.createElement('img');
+    img.className = 'avatar';
+    img.src = profile.photo || 'img/default-user.png';
+    img.alt = profile.name
+      ? `Profile photo of ${profile.name}`
+      : 'Default profile placeholder';
+
+    const info = document.createElement('div');
+    info.className = 'neighbor-info';
+    info.innerHTML = `
+      <h4>${profile.name || 'Neighbor'}</h4>
+      <p>${profile.bio || ''}</p>
+    `;
+
+    card.appendChild(img);
+    card.appendChild(info);
+    container.appendChild(card);
+  });
 }
 
 window.onload = () => {
-  const savedTheme = localStorage.getItem('theme');
-  if (savedTheme) document.body.className = savedTheme;
+  // Apply saved theme
+  applySavedTheme();
 
-  // === CLEAR DATA BUTTON ===
+  // === BOTTOM BAR CONTROLS ===
+  const modeToggle = document.getElementById('modeToggle');
+  if (modeToggle) {
+    modeToggle.addEventListener('click', toggleTheme);
+  }
+
   const clearDataBtn = document.getElementById('clearDataBtn');
   if (clearDataBtn) {
     clearDataBtn.addEventListener('click', () => {
       localStorage.clear();
       alert('Your data has been cleared.');
+      applySavedTheme();    // reset theme back to default
+      renderNeighbors();    // clear any profile cards
     });
   }
+
+  // Render neighbors if on home page
+  renderNeighbors();
 };
 
 // === EXPAND EVENT DETAILS ON nav.html ===
@@ -25,7 +89,7 @@ if (expandBtn) {
   expandBtn.addEventListener('click', () => {
     const isHidden = details.classList.toggle('hidden');
     expandBtn.textContent = isHidden ? '+' : '–';
-    expandBtn.setAttribute('aria-expanded', !isHidden);
+    expandBtn.setAttribute('aria-expanded', String(!isHidden));
   });
 }
 
@@ -34,22 +98,55 @@ const newsletterForm = document.getElementById('newsletter-form');
 if (newsletterForm) {
   newsletterForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    const successDiv = document.querySelector('.success-animation');
-    successDiv.textContent = '🎉 Subscribed successfully!';
-    successDiv.style.display = 'block';
+    const successDiv = newsletterForm.querySelector('.success-animation');
+    if (successDiv) {
+      successDiv.textContent = '🎉 Subscribed successfully!';
+      successDiv.style.display = 'block';
+    }
     newsletterForm.reset();
   });
 }
 
-// === PROFILE FORM ===
+// === PROFILE FORM (WITH OPTIONAL PHOTO) ===
 const profileForm = document.getElementById('profile-form');
 if (profileForm) {
   profileForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    const successDiv = document.querySelector('.success-animation');
-    successDiv.textContent = 'Profile posted successfully!';
-    successDiv.style.display = 'block';
-    profileForm.reset();
+
+    const nameInput = document.getElementById('name');
+    const bioInput = document.getElementById('bio');
+    const photoInput = document.getElementById('profile-photo');
+
+    const name = nameInput.value.trim();
+    const bio = bioInput.value.trim();
+    const file = photoInput.files[0];
+
+    const saveProfile = (photoDataUrl) => {
+      const profiles = JSON.parse(localStorage.getItem('profiles') || '[]');
+      profiles.push({
+        name,
+        bio,
+        photo: photoDataUrl || null,
+      });
+      localStorage.setItem('profiles', JSON.stringify(profiles));
+
+      const successDiv = document.querySelector('.success-animation');
+      if (successDiv) {
+        successDiv.textContent = 'Profile posted successfully!';
+        successDiv.style.display = 'block';
+      }
+
+      profileForm.reset();
+    };
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => saveProfile(reader.result);
+      reader.readAsDataURL(file);
+    } else {
+      // no image uploaded, use default placeholder later
+      saveProfile(null);
+    }
   });
 }
 
@@ -59,8 +156,10 @@ if (eventForm) {
   eventForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const successDiv = document.querySelector('.success-animation');
-    successDiv.textContent = 'Event hosted successfully!';
-    successDiv.style.display = 'block';
+    if (successDiv) {
+      successDiv.textContent = 'Event hosted successfully!';
+      successDiv.style.display = 'block';
+    }
     eventForm.reset();
   });
 }
@@ -71,8 +170,10 @@ if (searchInput) {
   const listItems = document.querySelectorAll('#resource-list li');
   searchInput.addEventListener('input', () => {
     const query = searchInput.value.toLowerCase();
-    listItems.forEach(item => {
-      item.style.display = item.textContent.toLowerCase().includes(query) ? '' : 'none';
+    listItems.forEach((item) => {
+      item.style.display = item.textContent.toLowerCase().includes(query)
+        ? ''
+        : 'none';
     });
   });
 }
@@ -83,7 +184,9 @@ if (contactForm) {
   contactForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const feedback = document.getElementById('form-feedback');
-    feedback.textContent = 'Thanks for reaching out! We’ll get back to you soon.';
+    if (feedback) {
+      feedback.textContent = 'Thanks for reaching out! We’ll get back to you soon.';
+    }
     contactForm.reset();
   });
 }

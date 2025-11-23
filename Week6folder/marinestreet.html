@@ -21,15 +21,25 @@
     </nav>
 
     <main class="main">
-      <h2>Welcome! Find Nearby Friends!</h2>
-      <p>Get updates on current events, parties, and neighborhood happenings near you.</p>
+      <!-- HERO IMAGE -->
+      <section class="hero">
+        <div class="hero-image-wrapper">
+          <!-- You can swap this out with any local hero image later -->
+          <img src="img/barbie-logo.png"
+               alt="Colorful community themed graphic"
+               class="hero-image">
+          <div class="hero-overlay"></div>
+          <div class="hero-text">
+            <h2>Connect with Your Marine Street Neighbors</h2>
+            <p>Discover events, share resources, and meet the people who live around you.</p>
+          </div>
+        </div>
+      </section>
 
-      <div class="mode-buttons">
-        <button type="button" class="chip" onclick="setMode('light')">Light Mode</button>
-        <button type="button" class="chip" onclick="setMode('dark')">Dark Mode</button>
-      </div>
-
-      <button id="clearDataBtn" class="chip danger">Clear My Data</button>
+      <section class="intro">
+        <h2>Welcome! Find Nearby Friends!</h2>
+        <p>Get updates on current events, parties, and neighborhood happenings near you.</p>
+      </section>
 
       <section class="privacy-info" aria-labelledby="privacy-heading">
         <h3 id="privacy-heading">Privacy Information</h3>
@@ -46,6 +56,14 @@
         <div class="action-buttons">
           <a href="post-profile.html" class="cta-btn">Post Your Profile</a>
           <a href="host-event.html" class="cta-btn">Host an Event</a>
+        </div>
+      </section>
+
+      <!-- MEET YOUR NEIGHBORS (PROFILE CARDS WITH AVATARS) -->
+      <section class="neighbors" aria-labelledby="neighbors-heading">
+        <h3 id="neighbors-heading">Meet Your Neighbors</h3>
+        <div id="neighbor-list" class="neighbor-list">
+          <!-- JS will inject neighbor cards here -->
         </div>
       </section>
 
@@ -69,6 +87,16 @@
     </aside>
 
     <footer class="footer">© 2025 Marine Street Neighborhood Hub</footer>
+  </div>
+
+  <!-- BOTTOM BAR: LIGHT/DARK TOGGLE + CLEAR DATA -->
+  <div class="bottom-bar" role="toolbar" aria-label="Display and data settings">
+    <button id="modeToggle" class="mode-toggle" aria-pressed="false">
+      🌞 Light mode
+    </button>
+    <button id="clearDataBtn" class="clear-btn" type="button">
+      🗑 Clear my data
+    </button>
   </div>
 </body>
 </html>
