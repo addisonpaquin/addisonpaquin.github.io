@@ -15,24 +15,24 @@
 
   <main class="form-container">
     <form id="profile-form" enctype="multipart/form-data">
+      
       <label for="name">Name:</label>
       <input id="name" type="text" placeholder="Your name" required />
 
       <label for="bio">Short Bio:</label>
-      <textarea id="bio" placeholder="Tell your neighbors a little about you!" required></textarea>
+      <textarea id="bio" placeholder="Tell your neighbors about yourself!" required></textarea>
 
-      <!-- NEW: PROFILE PHOTO UPLOAD -->
       <label for="profile-photo">Profile Photo (optional):</label>
       <input id="profile-photo" type="file" accept="image/*" />
 
       <button type="submit" class="cta-btn">Submit</button>
     </form>
+
     <div class="success-animation" aria-live="polite"></div>
 
     <a href="marinestreet.html" class="back-link">← Back to Home</a>
   </main>
 
-  <!-- BOTTOM BAR -->
   <div class="bottom-bar" role="toolbar" aria-label="Display and data settings">
     <button id="modeToggle" class="mode-toggle" aria-pressed="false">
       🌞 Light mode
