@@ -21,10 +21,13 @@
     </nav>
 
     <main class="main">
+
+      <!-- WELCOME BACK BANNER -->
+      <p id="welcome-back" style="display:none; font-weight:bold;"></p>
+
       <!-- HERO IMAGE -->
       <section class="hero">
         <div class="hero-image-wrapper">
-          <!-- You can swap this out with any local hero image later -->
           <img src="img/barbie-logo.png"
                alt="Colorful community themed graphic"
                class="hero-image">
@@ -44,10 +47,9 @@
       <section class="privacy-info" aria-labelledby="privacy-heading">
         <h3 id="privacy-heading">Privacy Information</h3>
         <p>
-          We collect your mode preference and form input (name and email) to make your experience
+          We collect your mode preference and form input (name and bio) to make your experience
           more personalized. This data is stored locally in your browser using localStorage and is
           never shared externally. You can clear this data anytime using the “Clear My Data” button.
-          Data automatically expires after 30 days.
         </p>
       </section>
 
@@ -63,7 +65,7 @@
       <section class="neighbors" aria-labelledby="neighbors-heading">
         <h3 id="neighbors-heading">Meet Your Neighbors</h3>
         <div id="neighbor-list" class="neighbor-list">
-          <!-- JS will inject neighbor cards here -->
+          <!-- JS injects profile cards here -->
         </div>
       </section>
 
@@ -89,7 +91,7 @@
     <footer class="footer">© 2025 Marine Street Neighborhood Hub</footer>
   </div>
 
-  <!-- BOTTOM BAR: LIGHT/DARK TOGGLE + CLEAR DATA -->
+  <!-- BOTTOM BAR -->
   <div class="bottom-bar" role="toolbar" aria-label="Display and data settings">
     <button id="modeToggle" class="mode-toggle" aria-pressed="false">
       🌞 Light mode
