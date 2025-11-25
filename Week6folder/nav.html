@@ -7,7 +7,9 @@
   <link rel="stylesheet" href="style.css">
   <script src="script.js" defer></script>
 </head>
+
 <body class="mode-light">
+
   <header class="header">
     <h1>Neighborhood Events</h1>
   </header>
@@ -22,10 +24,10 @@
     <section class="events-layout">
       <h2>Upcoming Events</h2>
 
-      <!-- EVENTS GRID (CAN HOLD MULTIPLE CARDS) -->
       <div class="events-grid">
-        <!-- EVENT CARD WITH THUMBNAIL -->
+
         <article class="card event-card">
+          
           <div class="event-media">
             <img src="img/barbie-logo.png"
                  alt="Barbie Movie Marathon event artwork"
@@ -35,13 +37,12 @@
           <div class="event-body">
             <div class="card-header">
               <h3>Barbie Movie Marathon</h3>
-              <button class="expand-btn" aria-expanded="false" aria-controls="event-details">
-                +
-              </button>
+              <button class="expand-btn" aria-expanded="false">+</button>
             </div>
+
             <div class="card-content">
               <p class="summary">Movie Night at 1719 Marine Street!</p>
-              <div id="event-details" class="details hidden">
+              <div class="details hidden">
                 <p><strong>When:</strong> Saturday, 9 PM</p>
                 <p><strong>Where:</strong> 1719 Marine Street</p>
                 <p><strong>Bring:</strong> Snacks and friends!</p>
@@ -49,8 +50,9 @@
               </div>
             </div>
           </div>
+
         </article>
-        <!-- Add more <article class="card event-card"> here later if you want -->
+
       </div>
     </section>
 
@@ -59,7 +61,6 @@
 
   <footer class="footer">© 2025 Marine Street Neighborhood Hub</footer>
 
-  <!-- BOTTOM BAR -->
   <div class="bottom-bar" role="toolbar" aria-label="Display and data settings">
     <button id="modeToggle" class="mode-toggle" aria-pressed="false">
       🌞 Light mode
