@@ -185,99 +185,6 @@ body.mode-dark textarea {
   }
 }
 
-/* CARDS */
-
-.card {
-  width: 100%;
-  max-width: 800px;
-  margin: 20px auto;
-  border: 1px solid #ccc;
-  border-radius: var(--radius-card);
-  background-color: #fff;
-  box-shadow: var(--shadow-soft);
-  overflow: hidden;
-}
-
-body.mode-dark .card {
-  background-color: #1b1b1b;
-  border-color: #333;
-}
-
-.card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 16px;
-  background-color: #f0f0f0;
-}
-
-body.mode-dark .card-header {
-  background-color: #262626;
-}
-
-.card-header h3 {
-  margin: 0;
-  font-size: 1.2em;
-}
-
-.card-content {
-  padding: 16px;
-}
-
-.hidden {
-  display: none;
-}
-
-/* EXPAND BUTTON */
-
-.expand-btn {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background-color: #ff69b4;
-  color: white;
-  border: none;
-  font-size: 20px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background-color 0.3s ease;
-}
-
-.expand-btn:hover,
-.expand-btn:focus {
-  background-color: #ff3fa0;
-  outline: none;
-}
-
-/* INPUT FOCUS EFFECT */
-
-input:focus,
-textarea:focus {
-  outline: none;
-  border-color: #ff69b4;
-  box-shadow: 0 0 8px rgba(255, 105, 180, 0.6);
-  transform: scale(1.02);
-  transition: border-color 0.3s ease-in-out,
-              box-shadow 0.3s ease-in-out,
-              transform 0.3s ease-in-out;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  input:focus,
-  textarea:focus {
-    transition: none;
-    transform: none;
-  }
-}
-
-input:not(:focus),
-textarea:not(:focus) {
-  background-color: #fafafa;
-  transition: background-color 0.3s ease-in-out;
-}
-
 /* HERO IMAGE */
 
 .hero {
@@ -326,6 +233,14 @@ textarea:not(:focus) {
   margin: 0;
 }
 
+/* WELCOME BACK MESSAGE */
+
+#welcome-back {
+  font-size: 1.2rem;
+  color: #ff3fa0;
+  padding: 10px 0;
+}
+
 /* NEIGHBOR PROFILES */
 
 .neighbors {
@@ -356,7 +271,7 @@ body.mode-dark .neighbor-card {
   width: 64px;
   height: 64px;
   border-radius: var(--radius-full);
-  object-fit: cover; /* center-crop */
+  object-fit: cover;
   border: 2px solid rgba(0, 0, 0, 0.08);
 }
 
@@ -435,7 +350,7 @@ body.mode-dark .avatar {
   color: #007acc;
 }
 
-/* BOTTOM BAR (LIGHT/DARK TOGGLE + CLEAR) */
+/* BOTTOM BAR */
 
 .bottom-bar {
   position: fixed;
@@ -497,8 +412,6 @@ body.mode-dark .clear-btn {
 .clear-btn:hover {
   opacity: 0.9;
 }
-
-/* Desktop: make bar narrower & centered (already with max-width) */
 
 @media (max-width: 600px) {
   .bottom-bar {

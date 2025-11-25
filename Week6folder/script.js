@@ -1,4 +1,6 @@
-// === THEME HANDLING ===
+// ===========================
+//  THEME HANDLING
+// ===========================
 
 function updateModeToggle(themeClass) {
   const toggle = document.getElementById('modeToggle');
@@ -26,7 +28,59 @@ function toggleTheme() {
   updateModeToggle(newTheme);
 }
 
-// === RENDER NEIGHBORS ON HOME ===
+// ===========================
+//  HERO IMAGE ROTATION
+// ===========================
+
+function setHeroImage() {
+  const hero = document.querySelector('.hero-image');
+  if (!hero) return;
+
+  const images = [
+    "img/barbie-logo.png",
+    "img/default-user.png",
+    "img/barbie-logo.png"
+  ];
+
+  const randomImage = images[Math.floor(Math.random() * images.length)];
+  hero.src = randomImage;
+}
+
+// ===========================
+// SCROLL POSITION MEMORY
+// ===========================
+
+function restoreScrollPosition() {
+  const savedScroll = localStorage.getItem("scrollY");
+  if (savedScroll) window.scrollTo(0, savedScroll);
+}
+
+window.addEventListener("scroll", () => {
+  localStorage.setItem("scrollY", window.scrollY);
+});
+
+// ===========================
+// TRACK SITE VISITS
+// ===========================
+
+function registerSiteVisit() {
+  let count = parseInt(localStorage.getItem("visits") || "0");
+  count++;
+  localStorage.setItem("visits", count);
+
+  const welcomeDiv = document.getElementById("welcome-back");
+  if (!welcomeDiv) return;
+
+  if (count > 1) {
+    welcomeDiv.textContent = `Welcome back! You've visited ${count} times!`;
+    welcomeDiv.style.display = "block";
+  }
+}
+
+// ===========================
+//  RENDER NEIGHBORS
+// ===========================
+
 function renderNeighbors() {
   const container = document.getElementById('neighbor-list');
   if (!container) return;
@@ -58,42 +112,62 @@ function renderNeighbors() {
   });
 }
 
-window.onload = () => {
-  // Apply saved theme
-  applySavedTheme();
+// ===========================
+//  EVENT EXPANSION
+// ===========================
 
-  // === BOTTOM BAR CONTROLS ===
-  const modeToggle = document.getElementById('modeToggle');
-  if (modeToggle) {
-    modeToggle.addEventListener('click', toggleTheme);
-  }
+function enableEventExpansion() {
+  const expandButtons = document.querySelectorAll('.expand-btn');
 
-  const clearDataBtn = document.getElementById('clearDataBtn');
-  if (clearDataBtn) {
-    clearDataBtn.addEventListener('click', () => {
-      localStorage.clear();
-      alert('Your data has been cleared.');
-      applySavedTheme();    // reset theme back to default
-      renderNeighbors();    // clear any profile cards
+  expandButtons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const details = btn.closest('.card').querySelector('.details');
+      const isHidden = details.classList.toggle('hidden');
+      btn.textContent = isHidden ? '+' : '–';
+      btn.setAttribute('aria-expanded', String(!isHidden));
     });
-  }
-
-  // Render neighbors if on home page
-  renderNeighbors();
-};
-
-// === EXPAND EVENT DETAILS ON nav.html ===
-const expandBtn = document.querySelector('.expand-btn');
-if (expandBtn) {
-  const details = document.querySelector('.details');
-  expandBtn.addEventListener('click', () => {
-    const isHidden = details.classList.toggle('hidden');
-    expandBtn.textContent = isHidden ? '+' : '–';
-    expandBtn.setAttribute('aria-expanded', String(!isHidden));
   });
 }
 
-// === NEWSLETTER FORM ===
+// ===========================
+// CLEAR MY DATA
+// ===========================
+
+function clearAllData() {
+  const ok = confirm("Are you sure? This will erase ALL saved data.");
+  if (!ok) return;
+
+  localStorage.clear();
+  alert("Your data has been erased.");
+
+  applySavedTheme();
+  renderNeighbors();
+  window.scrollTo(0, 0);
+}
+
+// ===========================
+// ON PAGE LOAD
+// ===========================
+
+window.onload = () => {
+  applySavedTheme();
+  restoreScrollPosition();
+  registerSiteVisit();
+  setHeroImage();
+  renderNeighbors();
+  enableEventExpansion();
+
+  const modeToggle = document.getElementById('modeToggle');
+  if (modeToggle) modeToggle.addEventListener('click', toggleTheme);
+
+  const clearDataBtn = document.getElementById('clearDataBtn');
+  if (clearDataBtn) clearDataBtn.addEventListener('click', clearAllData);
+};
+
+// ===========================
+// NEWSLETTER FORM
+// ===========================
+
 const newsletterForm = document.getElementById('newsletter-form');
 if (newsletterForm) {
   newsletterForm.addEventListener('submit', (e) => {
@@ -107,7 +181,10 @@ if (newsletterForm) {
   });
 }
 
-// === PROFILE FORM (WITH OPTIONAL PHOTO) ===
+// ===========================
+// PROFILE FORM
+// ===========================
+
 const profileForm = document.getElementById('profile-form');
 if (profileForm) {
   profileForm.addEventListener('submit', (e) => {
@@ -123,11 +200,7 @@ if (profileForm) {
 
     const saveProfile = (photoDataUrl) => {
       const profiles = JSON.parse(localStorage.getItem('profiles') || '[]');
-      profiles.push({
-        name,
-        bio,
-        photo: photoDataUrl || null,
-      });
+      profiles.push({ name, bio, photo: photoDataUrl || null });
       localStorage.setItem('profiles', JSON.stringify(profiles));
 
       const successDiv = document.querySelector('.success-animation');
@@ -135,7 +208,6 @@ if (profileForm) {
         successDiv.textContent = 'Profile posted successfully!';
         successDiv.style.display = 'block';
       }
-
       profileForm.reset();
     };
 
@@ -144,48 +216,39 @@ if (profileForm) {
       reader.onload = () => saveProfile(reader.result);
       reader.readAsDataURL(file);
     } else {
-      // no image uploaded, use default placeholder later
       saveProfile(null);
     }
   });
 }
 
-// === EVENT FORM ===
+// ===========================
+// EVENT FORM
+// ===========================
+
 const eventForm = document.getElementById('event-form');
 if (eventForm) {
   eventForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const successDiv = document.querySelector('.success-animation');
     if (successDiv) {
-      successDiv.textContent = 'Event hosted successfully!';
+      successDiv.textContent = 'Event posted successfully!';
       successDiv.style.display = 'block';
     }
     eventForm.reset();
   });
 }
 
-// === RESOURCE SEARCH FILTER ===
-const searchInput = document.getElementById('search');
-if (searchInput) {
-  const listItems = document.querySelectorAll('#resource-list li');
-  searchInput.addEventListener('input', () => {
-    const query = searchInput.value.toLowerCase();
-    listItems.forEach((item) => {
-      item.style.display = item.textContent.toLowerCase().includes(query)
-        ? ''
-        : 'none';
-    });
-  });
-}
+// ===========================
+// CONTACT FORM FEEDBACK
+// ===========================
 
-// === CONTACT FORM FEEDBACK ===
 const contactForm = document.getElementById('contact-form');
 if (contactForm) {
   contactForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const feedback = document.getElementById('form-feedback');
     if (feedback) {
-      feedback.textContent = 'Thanks for reaching out! We’ll get back to you soon.';
+      feedback.textContent = 'Thanks for reaching out!';
     }
     contactForm.reset();
   });
