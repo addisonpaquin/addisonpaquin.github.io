@@ -283,6 +283,23 @@ body.mode-dark .avatar {
   margin: 0 0 0.25rem;
 }
 
+/* NEW — highlight the current user’s profile */
+
+.neighbor-card--me {
+  border: 2px solid #ff69b4;
+  box-shadow: 0 0 0 3px rgba(255, 105, 180, 0.25);
+}
+
+.badge-me {
+  display: inline-block;
+  background: #ff69b4;
+  color: #fff;
+  font-size: 0.7rem;
+  padding: 0.1rem 0.4rem;
+  border-radius: 999px;
+  margin-left: 0.25rem;
+}
+
 /* EVENTS PAGE LAYOUT */
 
 .events-main {
@@ -300,7 +317,7 @@ body.mode-dark .avatar {
   gap: 1.5rem;
 }
 
-/* EVENT CARD MEDIA LAYOUT */
+/* EVENT CARD */
 
 .event-card {
   display: flex;
@@ -319,11 +336,7 @@ body.mode-dark .avatar {
   border-radius: var(--radius-card);
 }
 
-.event-body {
-  flex: 1;
-}
-
-/* Stack vertically on mobile */
+/* mobile stack */
 
 @media (max-width: 640px) {
   .event-card {
